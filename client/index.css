@@ -1,0 +1,8 @@
+.controls{
+    display: flex;
+    align-items: flex-end;
+}
+
+.controls>*{
+    margin: 5px;
+}

@@ -1,0 +1,19 @@
+{
+  "name": "web-socket-chat",
+  "version": "1.0.0",
+  "description": "web-socket chat for practice",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "author": "Volkov Mikhail <volkov.work1@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-ws": "^5.0.2"
+  }
+}
