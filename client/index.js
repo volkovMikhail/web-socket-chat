@@ -8,7 +8,28 @@ const chat = document.querySelector('#chat');
 const userSpan = (document.querySelector('#username').innerHTML += username);
 
 //web-socket
-const socket = new WebSocket('ws://localhost:5000/');
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+let socket;
+
+function startSocket() {
+    socket = new WebSocket(`${protocol}://${window.location.host}/`);
+
+    socket.onmessage = (event) => {
+        chat.insertAdjacentHTML(
+            'afterbegin',
+            `
+            <div class="message">${event.data}</div>
+            `
+        );
+    };
+
+    socket.onclose = () => {
+        startSocket();
+        console.log('reconnect');
+    };
+}
+
+startSocket();
 
 socket.onopen = () => {
     socket.send(
@@ -20,15 +41,6 @@ socket.onopen = () => {
         })
     );
     fetchData();
-};
-
-socket.onmessage = (event) => {
-    chat.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="message">${event.data}</div>
-        `
-    );
 };
 
 //recive all data

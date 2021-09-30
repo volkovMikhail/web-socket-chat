@@ -23,6 +23,9 @@ app.ws('/',(ws,req)=>{
                 saveToDB(message);
                 broadcastConnection(ws,message,`${message.username}: ${message.message}`)
                 break;
+            default:
+                
+                break;
         }
     })
 })
