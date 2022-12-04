@@ -9,16 +9,7 @@ const app = express();
 const WSServer = require('express-ws')(app);
 const aWss = WSServer.getWss();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname, '..', 'client'));
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage: storage });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const PORT = process.env.PORT || 5000;
 const DATABASE = [];
@@ -47,7 +38,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const form = new FormData();
 
-    form.append('image', fs.createReadStream(req.file.path));
+    form.append('image', req.file.buffer.toString('base64'));
 
     const response = await axios.post(`https://api.imgbb.com/1/upload?key=${process.env.IMG_BB_KEY}`, form, {
       headers: {
@@ -63,8 +54,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: 'cannot save file' });
-  } finally {
-    fs.rmSync(req.file.path);
   }
 });
 
