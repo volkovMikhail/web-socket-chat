@@ -1,8 +1,20 @@
-.controls{
-    display: flex;
-    align-items: flex-end;
+.controls {
+  display: inline-block;
 }
 
-.controls>*{
-    margin: 5px;
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls > * {
+  margin: 5px;
+}
+
+img {
+  width: 185px;
+}
+
+#send {
+  width: 180px;
 }

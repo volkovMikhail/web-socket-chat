@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="index.css" />
-        <title>Chat</title>
-    </head>
-    <body>
-        <div class="controls">
-            <textarea id="text" rows="3"></textarea>
-            <button id="send">Send</button>
-            <span id="username">user: </span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>Chat</title>
+  </head>
+  <body>
+    <div class="controls">
+        <div>
+          <span id="username">user: </span>
         </div>
+        <div>
+            <textarea id="text" rows="3"></textarea>
+        </div>
+        <div>
+            <input type="file" id="file"></input>
+        </div>
+        <div class="buttons">
+            <button id="send">Send</button>
+        </div>
+    </div>
 
-        <div id="chat"></div>
-        <script src="index.js"></script>
-    </body>
+    <div id="chat"></div>
+    <script src="index.js"></script>
+  </body>
 </html>
