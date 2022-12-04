@@ -1,6 +1,10 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
+const axios = require('axios').default;
+const FormData = require('form-data');
+const fs = require('fs');
 const app = express();
 const WSServer = require('express-ws')(app);
 const aWss = WSServer.getWss();
@@ -39,8 +43,29 @@ app.ws('/', (ws, req) => {
   });
 });
 
-app.post('/upload', upload.single('file'), function (req, res) {
-  return res.json({ filename: req.file.filename });
+app.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+    const form = new FormData();
+
+    form.append('image', fs.createReadStream(req.file.path));
+
+    const response = await axios.post(`https://api.imgbb.com/1/upload?key=${process.env.IMG_BB_KEY}`, form, {
+      headers: {
+        ...form.getHeaders(),
+      },
+    });
+
+    const image = response.data.data.url;
+
+    console.log(image, 'UPLOADED');
+
+    return res.json({ filename: image });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: 'cannot save file' });
+  } finally {
+    fs.rmSync(req.file.path);
+  }
 });
 
 app.get('/messages', (req, res) => {

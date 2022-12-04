@@ -113,7 +113,7 @@ function showMassage(msg) {
             <div class="message">
                 ${msg.username} sent file:
             </div>
-            <img class="message" src="/${msg.message}" alt="/${msg.message}" />
+            <img class="message" src="${msg.message}" alt="${msg.message}" />
         `
       );
       break;
